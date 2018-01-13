@@ -1,0 +1,9 @@
+UI层
+
+业务逻辑Bll层:业务逻辑
+
+数据访问Dal层:SqlHelper帮助类
+
+模型Model层:对应数据库表的类
+
+通用Common层:MD5加密
