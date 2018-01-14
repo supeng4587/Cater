@@ -83,6 +83,11 @@ namespace CaterDal
             return SqliteHelper.ExecuteNonQuery(sql, listPs.ToArray());//ToArray将集合转化成数组
         }
 
+        /// <summary>
+        /// 物理删除
+        /// </summary>
+        /// <param name="id">int id</param>
+        /// <returns>删除的行数</returns>
         public int Delete(int id)
         {
             string sql = "DELEtE FROM ManagerInfo WHERE MId = @id";
@@ -93,6 +98,40 @@ namespace CaterDal
             };
 
             return SqliteHelper.ExecuteNonQuery(sql, ps);
+        }
+
+        /// <summary>
+        /// 根据用户名查找对象
+        /// </summary>
+        /// <param name="name">string name</param>
+        /// <returns>ManagerInfo 返回null为未找到对象</returns>
+        public ManagerInfo GetByName(string name)
+        {
+            //定义一个对象
+            ManagerInfo mi = null;
+            //构造sql语句和参数
+            string sql = "SELECT * FROM ManagerInfo WHERE MName = @name";
+            SQLiteParameter p = new SQLiteParameter("@name", name);
+            //执行查询得到结果
+            DataTable dt = SqliteHelper.GetDataTable(sql, p);
+            //判断是否根据用户名查找到了对象
+            if (dt.Rows.Count > 0)
+            {
+                //用户名存在
+                mi = new ManagerInfo()
+                {
+                    MId = Convert.ToInt32(dt.Rows[0][0]),
+                    MName = name,
+                    MPwd = dt.Rows[0][2].ToString(),
+                    MType = Convert.ToInt32(dt.Rows[0][3])
+                };
+            }
+            else
+            {
+                //用户名不存在
+
+            }
+            return mi;
         }
     }
 }
