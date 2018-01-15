@@ -115,6 +115,7 @@
             this.btnAddType.TabIndex = 13;
             this.btnAddType.Text = "类型管理";
             this.btnAddType.UseVisualStyleBackColor = true;
+            this.btnAddType.Click += new System.EventHandler(this.btnAddType_Click);
             // 
             // btnCancel
             // 

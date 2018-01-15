@@ -49,6 +49,7 @@ namespace CaterUI
             //根据条件进行查询
             dgvList.AutoGenerateColumns = false;
             dgvList.DataSource = miBll.GetList(dic);
+            dgvList.Rows[dgvSelectedIndex].Selected = true;
         }
 
         private void LoadTypeList()
@@ -81,8 +82,11 @@ namespace CaterUI
             LoadList();
         }
 
+        private int dgvSelectedIndex = 0;
+
         private void dgvList_CellDoubleClick(object sender, DataGridViewCellEventArgs e)
         {
+            dgvSelectedIndex = e.RowIndex;
             var row = dgvList.Rows[e.RowIndex];
             txtId.Text = row.Cells[0].Value.ToString();
             txtNameAdd.Text = row.Cells[1].Value.ToString();
@@ -170,6 +174,19 @@ namespace CaterUI
                 MessageBox.Show("删除失败,请稍后重试......");
             }
             Clean();
+        }
+
+        private void btnAddType_Click(object sender, EventArgs e)
+        {
+            FormMemberTypeInfo formMti = new FormMemberTypeInfo();
+            //以模态窗口打开分类管理
+            DialogResult result = formMti.ShowDialog();
+            //根据返回值判断，是否更新分类下拉列表
+            if (result == DialogResult.OK)
+            {
+                LoadTypeList();
+                LoadList();
+            }
         }
     }
 }

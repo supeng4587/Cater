@@ -20,6 +20,7 @@ namespace CaterUI
         }
 
         MemberTypeInfoBll mtiBll = new MemberTypeInfoBll();
+        private DialogResult resule = DialogResult.Cancel;
 
         private void FormMemberTypeInfo_Load(object sender, EventArgs e)
         {
@@ -116,6 +117,7 @@ namespace CaterUI
                 }
             }
             Clean();
+            resule = DialogResult.OK;
         }
 
 
@@ -142,6 +144,13 @@ namespace CaterUI
                     MessageBox.Show("删除失败,稍后重试......");
                 }
             }
+
+            resule = DialogResult.OK;
+        }
+
+        private void FormMemberTypeInfo_FormClosing(object sender, FormClosingEventArgs e)
+        {
+            this.DialogResult = resule;
         }
     }
 }
