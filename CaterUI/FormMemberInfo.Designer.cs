@@ -95,6 +95,7 @@
             this.btnRemove.TabIndex = 19;
             this.btnRemove.Text = "删除选中的行数据";
             this.btnRemove.UseVisualStyleBackColor = true;
+            this.btnRemove.Click += new System.EventHandler(this.btnRemove_Click);
             // 
             // label9
             // 
@@ -123,6 +124,7 @@
             this.btnCancel.TabIndex = 12;
             this.btnCancel.Text = "取消";
             this.btnCancel.UseVisualStyleBackColor = true;
+            this.btnCancel.Click += new System.EventHandler(this.btnCancel_Click);
             // 
             // btnSave
             // 

@@ -55,5 +55,27 @@ namespace CaterDal
             return SqliteHelper.ExecuteNonQuery(sql, ps);
         }
 
+        public int Update(MemberInfo mi)
+        {
+            string sql = "UPDATE MemberInfo SET MTypeId = @typeId, MName = @name, MPhone = @phone, MMoney = @money WHERE MId = @id";
+            SQLiteParameter[] ps =
+            {
+                new SQLiteParameter("@typeId",mi.MTypeId),
+                new SQLiteParameter("@name",mi.MName),
+                new SQLiteParameter("@phone",mi.MPhone),
+                new SQLiteParameter("@money",mi.MMoney),
+                new SQLiteParameter("@id",mi.MId)
+            };
+            return SqliteHelper.ExecuteNonQuery(sql, ps);
+        }
+
+        public int Delete(int id)
+        {
+            string sql = "UPDATE MemberInfo SET MIsDelete = 0 WHERE MId = @id";
+            SQLiteParameter p = new SQLiteParameter("@id", id);
+
+            return SqliteHelper.ExecuteNonQuery(sql, p);
+        }
+
     }
 }

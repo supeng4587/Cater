@@ -83,7 +83,13 @@ namespace CaterUI
 
         private void dgvList_CellDoubleClick(object sender, DataGridViewCellEventArgs e)
         {
-
+            var row = dgvList.Rows[e.RowIndex];
+            txtId.Text = row.Cells[0].Value.ToString();
+            txtNameAdd.Text = row.Cells[1].Value.ToString();
+            ddlType.Text = row.Cells[2].Value.ToString();
+            txtPhoneAdd.Text = row.Cells[3].Value.ToString();
+            txtMoney.Text = row.Cells[4].Value.ToString();
+            btnSave.Text = "修改";
         }
 
         private void btnSave_Click(object sender, EventArgs e)
@@ -115,9 +121,55 @@ namespace CaterUI
             else
             {
                 #region 修改
-                //修改 
+                mi.MId = int.Parse(txtId.Text);
+                if (miBll.Edit(mi))
+                {
+                    LoadList();
+                    MessageBox.Show("修改成功.");
+                }
+                else
+                {
+                    MessageBox.Show("修改失败,稍后再试......");
+                }
                 #endregion
             }
+            Clean();
+        }
+
+        private void Clean()
+        {
+            txtId.Text = "添加时无编号";
+            txtNameAdd.Text = "";
+            ddlType.Text = null;
+            txtPhoneAdd.Text = "";
+            txtMoney.Text = "";
+            btnSave.Text = "添加";
+        }
+
+        private void btnCancel_Click(object sender, EventArgs e)
+        {
+            Clean();
+        }
+
+        private void btnRemove_Click(object sender, EventArgs e)
+        {
+            int id = Convert.ToInt32(dgvList.SelectedRows[0].Cells[0].Value);
+
+            DialogResult result = MessageBox.Show("确认要删除吗？", "提示", MessageBoxButtons.OKCancel);
+            if(result!= DialogResult.OK)
+            {
+                return;
+            }
+            if (miBll.Remove(id))
+            {
+                LoadList();
+                MessageBox.Show("删除成功.");
+            }
+            else
+            {
+                MessageBox.Show("删除失败,请稍后重试......");
+            }
+            Clean();
         }
     }
 }
