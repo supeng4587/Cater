@@ -14,10 +14,29 @@ namespace CaterUI
 {
     public partial class FormManagerInfo : Form
     {
-        public FormManagerInfo()
+        private FormManagerInfo()
         {
             InitializeComponent();
         }
+        #region 典型的窗体单例模式
+
+        //实现窗体的单例
+        private static FormManagerInfo _form;
+        public static FormManagerInfo Create()
+        {
+            if (_form == null)
+            {
+                _form = new FormManagerInfo();
+            }
+            return _form;
+        }
+
+        private void FormManagerInfo_FormClosing(object sender, FormClosingEventArgs e)
+        {
+            //与单例保持一致,清理静态字段_form
+            _form = null;
+        } 
+        #endregion
 
         //创建业务逻辑层对象
         ManagerInfoBll miBll = new ManagerInfoBll();

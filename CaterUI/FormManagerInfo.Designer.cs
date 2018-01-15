@@ -271,6 +271,7 @@
             this.Controls.Add(this.groupBox1);
             this.Name = "FormManagerInfo";
             this.Text = "店员管理";
+            this.FormClosing += new System.Windows.Forms.FormClosingEventHandler(this.FormManagerInfo_FormClosing);
             this.Load += new System.EventHandler(this.FormManagerInfo_Load);
             ((System.ComponentModel.ISupportInitialize)(this.dgvList)).EndInit();
             this.groupBox2.ResumeLayout(false);

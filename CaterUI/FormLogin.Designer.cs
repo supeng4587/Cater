@@ -36,22 +36,25 @@
             // 
             // btnLogin
             // 
-            this.btnLogin.Location = new System.Drawing.Point(194, 160);
+            this.btnLogin.BackColor = System.Drawing.Color.Transparent;
+            this.btnLogin.BackgroundImageLayout = System.Windows.Forms.ImageLayout.None;
+            this.btnLogin.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+            this.btnLogin.Location = new System.Drawing.Point(194, 159);
             this.btnLogin.Name = "btnLogin";
             this.btnLogin.Size = new System.Drawing.Size(67, 35);
             this.btnLogin.TabIndex = 0;
-            this.btnLogin.Text = "登录";
-            this.btnLogin.UseVisualStyleBackColor = true;
+            this.btnLogin.UseVisualStyleBackColor = false;
             this.btnLogin.Click += new System.EventHandler(this.btnLogin_Click);
             // 
             // btnClose
             // 
-            this.btnClose.Location = new System.Drawing.Point(293, 160);
+            this.btnClose.BackColor = System.Drawing.Color.Transparent;
+            this.btnClose.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+            this.btnClose.Location = new System.Drawing.Point(293, 159);
             this.btnClose.Name = "btnClose";
             this.btnClose.Size = new System.Drawing.Size(67, 35);
             this.btnClose.TabIndex = 1;
-            this.btnClose.Text = "退出";
-            this.btnClose.UseVisualStyleBackColor = true;
+            this.btnClose.UseVisualStyleBackColor = false;
             this.btnClose.Click += new System.EventHandler(this.btnClose_Click);
             // 
             // txtName
@@ -67,6 +70,7 @@
             this.txtPwd.Font = new System.Drawing.Font("宋体", 16F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
             this.txtPwd.Location = new System.Drawing.Point(194, 111);
             this.txtPwd.Name = "txtPwd";
+            this.txtPwd.PasswordChar = '#';
             this.txtPwd.Size = new System.Drawing.Size(166, 32);
             this.txtPwd.TabIndex = 3;
             // 
