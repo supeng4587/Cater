@@ -21,6 +21,7 @@ namespace CaterUI
 
         DishTypeInfoBll dtiBll = new DishTypeInfoBll();
         DishTypeInfo dti = new DishTypeInfo();
+        DialogResult result = DialogResult.Cancel;
 
         private void FormDishTypeInfo_Load(object sender, EventArgs e)
         {
@@ -83,6 +84,7 @@ namespace CaterUI
                 #endregion
             }
             Clean();
+            this.result = DialogResult.OK;
         }
 
         private void btnCancel_Click(object sender, EventArgs e)
@@ -111,6 +113,12 @@ namespace CaterUI
             {
                 MessageBox.Show("删除失败,请稍后重试......");
             }
+            this.result = DialogResult.OK;
+        }
+
+        private void FormDishTypeInfo_FormClosing(object sender, FormClosingEventArgs e)
+        {
+            this.DialogResult = this.result;
         }
     }
 }

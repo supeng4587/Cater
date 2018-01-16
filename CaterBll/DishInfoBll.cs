@@ -21,5 +21,16 @@ namespace CaterBll
         {
             return diDal.Insert(di) > 0;
         }
+
+        public bool Edit(DishInfo di)
+        {
+            return diDal.Update(di) > 0;
+        }
+
+        public bool Remove(int id)
+        {
+            return diDal.Delete(id) > 0;
+        }
+
     }
 }

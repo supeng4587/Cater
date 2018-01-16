@@ -11,6 +11,8 @@ namespace CaterDal
 {
     public partial class DishInfoDal
     {
+        //CRUD操作 Create(增加)/Retrieve(取回)/Update(修改)/Delete(删除)
+        //retrieve
         public List<DishInfo> GetList(Dictionary<string,string> dic)
         {
             string sql = "SELECT "+
@@ -45,9 +47,10 @@ namespace CaterDal
             return list;
         }
 
+        //insert
         public int Insert(DishInfo di)
         {
-            string sql = "INSERT INTO (DTypeId, DTitle, DChar, DPrice ,DIsDelete) VALUES(@typeId, @title, @char, @price, @isDelete)";
+            string sql = "INSERT INTO DishInfo (DTypeId, DTitle, DChar, DPrice ,DIsDelete) VALUES(@typeId, @title, @char, @price, @isDelete)";
             SQLiteParameter[] ps =
             {
                 new SQLiteParameter("@typeId",di.DTypeId),
@@ -58,6 +61,29 @@ namespace CaterDal
             };
 
             return SqliteHelper.ExecuteNonQuery(sql, ps);
+        }
+
+        //update
+        public int Update(DishInfo di)
+        {
+            string sql = "UPDATE DishInfo SET DTypeId = @typeId, DTitle = @title, DChar = @char, DPrice = @price WHERE DId = @id";
+            SQLiteParameter[] ps =
+            {
+                new SQLiteParameter("@typeId",di.DTypeId),
+                new SQLiteParameter("@title",di.DTitle),
+                new SQLiteParameter("@char",di.DChar),
+                new SQLiteParameter("@price",di.DPrice),
+                new SQLiteParameter("@id",di.DId)
+            };
+            return SqliteHelper.ExecuteNonQuery(sql,ps);
+        }
+
+        //delete
+        public int Delete(int id)
+        {
+            string sql = "UPDATE DishInfo SET DIsDelete = 0 WHERE DId = @id";
+            SQLiteParameter p = new SQLiteParameter("@id", id);
+            return SqliteHelper.ExecuteNonQuery(sql, p);
         }
 
 

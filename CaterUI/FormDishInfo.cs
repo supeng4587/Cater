@@ -71,22 +71,40 @@ namespace CaterUI
             LoadTypeList();
             LoadList();
         }
-
+        
+        /// <summary>
+        /// txtTitleSearch失去焦点查询
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         private void txtTitleSearch_Leave(object sender, EventArgs e)
         {
             LoadList();
         }
 
+        /// <summary>
+        /// ddlTypeSearch改变查询
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         private void ddlTypeSearch_SelectedValueChanged(object sender, EventArgs e)
         {
             LoadList();
         }
-
+        
+        /// <summary>
+        /// 查询全部
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         private void btnSearchAll_Click(object sender, EventArgs e)
         {
             LoadList();
         }
 
+        /// <summary>
+        /// 添加框清理
+        /// </summary>
         private void Clean()
         {
             txtId.Text = "添加时无编号";
@@ -97,14 +115,27 @@ namespace CaterUI
             btnSave.Text = "添加";
         }
 
+        /// <summary>
+        /// dgvlist双击选择
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         private void dgvList_CellDoubleClick(object sender, DataGridViewCellEventArgs e)
         {
-            DataGridViewRow row = dgvList.SelectedRows[e.RowIndex];
+            DataGridViewRow row = dgvList.Rows[e.RowIndex];
             txtId.Text = row.Cells[0].Value.ToString();
             txtTitleSave.Text = row.Cells[1].Value.ToString();
+            ddlTypeAdd.Text = row.Cells[2].Value.ToString();
+            txtPrice.Text = row.Cells[3].Value.ToString();
+            txtChar.Text = row.Cells[4].Value.ToString();
             btnSave.Text = "修改";
         }
 
+        /// <summary>
+        /// btnSave按钮添加和修改
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         private void btnSave_Click(object sender, EventArgs e)
         {
             DishInfo di = new DishInfo()
@@ -117,30 +148,89 @@ namespace CaterUI
             if (txtId.Text == "添加时无编号")
             {
                 #region 添加
-
+                if (diBll.Add(di))
+                {
+                    LoadList();
+                    MessageBox.Show("添加成功.");
+                }
+                else
+                {
+                    MessageBox.Show("添加失败，请稍后重试......");
+                }
                 #endregion
             }
             else
             {
                 #region 修改
-                di.DId = Convert.ToInt32(txtId);
+                di.DId = Convert.ToInt32(txtId.Text);
+                if (diBll.Edit(di))
+                {
+                    LoadList();
+                    MessageBox.Show("修改成功.");
+                }
+                else
+                {
+                    MessageBox.Show("修改失败,请稍后再试......");
+                }
                 #endregion
+                Clean();
             }
         }
 
+        /// <summary>
+        /// cancel按钮清除
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         private void btnCancel_Click(object sender, EventArgs e)
         {
             Clean();
         }
 
+        /// <summary>
+        /// 逻辑删除
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         private void btnRemove_Click(object sender, EventArgs e)
         {
+            int id = int.Parse(dgvList.SelectedCells[0].Value.ToString());
+            DialogResult result = MessageBox.Show("确认要删除吗？", "提示", MessageBoxButtons.OKCancel);
+            if(result != DialogResult.OK)
+            {
+                return;
+            }
+            if (diBll.Remove(id))
+            {
+                LoadList();
+                MessageBox.Show("删除成功.");
+            }
+            else
+            {
+                MessageBox.Show("删除失败,请稍后重试......");
+            }
 
         }
 
+        /// <summary>
+        /// txtTitleSave失去焦点带出txtChar
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         private void txtTitleSave_Leave(object sender, EventArgs e)
         {
             txtChar.Text = PinyinHelper.GetPinyin(txtTitleSave.Text);
+        }
+
+        private void btnAddType_Click(object sender, EventArgs e)
+        {
+            FormDishTypeInfo formDti = new FormDishTypeInfo();
+            DialogResult result = formDti.ShowDialog();
+            if(result == DialogResult.OK)
+            {
+                LoadTypeList();
+                LoadList();
+            }
         }
     }
 }

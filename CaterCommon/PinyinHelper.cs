@@ -15,8 +15,15 @@ namespace CaterCommon
 
             foreach (char c in s1)
             {
-                ChineseChar cc=new ChineseChar(c);
-                s2 += cc.Pinyins[0][0];
+                try
+                {
+                    ChineseChar cc = new ChineseChar(c);
+                    s2 += cc.Pinyins[0][0];
+                }
+                catch
+                {
+                    s2 += "";
+                }
             }
 
             return s2;
