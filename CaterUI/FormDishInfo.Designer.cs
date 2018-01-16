@@ -37,16 +37,11 @@
             this.ddlTypeAdd = new System.Windows.Forms.ComboBox();
             this.txtChar = new System.Windows.Forms.TextBox();
             this.txtPrice = new System.Windows.Forms.TextBox();
-            this.Column1 = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.Column2 = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.Column3 = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.Column4 = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.txtTitleSave = new System.Windows.Forms.TextBox();
             this.txtId = new System.Windows.Forms.TextBox();
             this.label7 = new System.Windows.Forms.Label();
             this.label6 = new System.Windows.Forms.Label();
             this.dgvList = new System.Windows.Forms.DataGridView();
-            this.Column5 = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.label5 = new System.Windows.Forms.Label();
             this.groupBox1 = new System.Windows.Forms.GroupBox();
             this.label4 = new System.Windows.Forms.Label();
@@ -57,6 +52,11 @@
             this.label3 = new System.Windows.Forms.Label();
             this.groupBox3 = new System.Windows.Forms.GroupBox();
             this.groupBox2 = new System.Windows.Forms.GroupBox();
+            this.Column1 = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.Column2 = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.Column3 = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.Column4 = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.Column5 = new System.Windows.Forms.DataGridViewTextBoxColumn();
             ((System.ComponentModel.ISupportInitialize)(this.dgvList)).BeginInit();
             this.groupBox1.SuspendLayout();
             this.groupBox3.SuspendLayout();
@@ -80,6 +80,7 @@
             this.btnRemove.TabIndex = 16;
             this.btnRemove.Text = "删除选中的行数据";
             this.btnRemove.UseVisualStyleBackColor = true;
+            this.btnRemove.Click += new System.EventHandler(this.btnRemove_Click);
             // 
             // label9
             // 
@@ -108,6 +109,7 @@
             this.btnCancel.TabIndex = 12;
             this.btnCancel.Text = "取消";
             this.btnCancel.UseVisualStyleBackColor = true;
+            this.btnCancel.Click += new System.EventHandler(this.btnCancel_Click);
             // 
             // btnSave
             // 
@@ -117,6 +119,7 @@
             this.btnSave.TabIndex = 11;
             this.btnSave.Text = "添加";
             this.btnSave.UseVisualStyleBackColor = true;
+            this.btnSave.Click += new System.EventHandler(this.btnSave_Click);
             // 
             // ddlTypeAdd
             // 
@@ -141,40 +144,13 @@
             this.txtPrice.Size = new System.Drawing.Size(122, 21);
             this.txtPrice.TabIndex = 8;
             // 
-            // Column1
-            // 
-            this.Column1.DataPropertyName = "Did";
-            this.Column1.HeaderText = "编号";
-            this.Column1.Name = "Column1";
-            this.Column1.ReadOnly = true;
-            // 
-            // Column2
-            // 
-            this.Column2.DataPropertyName = "DTitle";
-            this.Column2.HeaderText = "名称";
-            this.Column2.Name = "Column2";
-            this.Column2.ReadOnly = true;
-            // 
-            // Column3
-            // 
-            this.Column3.DataPropertyName = "DTypeTitle";
-            this.Column3.HeaderText = "分类";
-            this.Column3.Name = "Column3";
-            this.Column3.ReadOnly = true;
-            // 
-            // Column4
-            // 
-            this.Column4.DataPropertyName = "DPrice";
-            this.Column4.HeaderText = "价格";
-            this.Column4.Name = "Column4";
-            this.Column4.ReadOnly = true;
-            // 
             // txtTitleSave
             // 
             this.txtTitleSave.Location = new System.Drawing.Point(56, 59);
             this.txtTitleSave.Name = "txtTitleSave";
             this.txtTitleSave.Size = new System.Drawing.Size(122, 21);
             this.txtTitleSave.TabIndex = 6;
+            this.txtTitleSave.Leave += new System.EventHandler(this.txtTitleSave_Leave);
             // 
             // txtId
             // 
@@ -223,13 +199,7 @@
             this.dgvList.SelectionMode = System.Windows.Forms.DataGridViewSelectionMode.FullRowSelect;
             this.dgvList.Size = new System.Drawing.Size(548, 428);
             this.dgvList.TabIndex = 0;
-            // 
-            // Column5
-            // 
-            this.Column5.DataPropertyName = "DChar";
-            this.Column5.HeaderText = "拼音";
-            this.Column5.Name = "Column5";
-            this.Column5.ReadOnly = true;
+            this.dgvList.CellDoubleClick += new System.Windows.Forms.DataGridViewCellEventHandler(this.dgvList_CellDoubleClick);
             // 
             // label5
             // 
@@ -267,6 +237,7 @@
             this.ddlTypeSearch.Name = "ddlTypeSearch";
             this.ddlTypeSearch.Size = new System.Drawing.Size(122, 20);
             this.ddlTypeSearch.TabIndex = 8;
+            this.ddlTypeSearch.SelectedValueChanged += new System.EventHandler(this.ddlTypeSearch_SelectedValueChanged);
             // 
             // btnSearchAll
             // 
@@ -276,6 +247,7 @@
             this.btnSearchAll.TabIndex = 5;
             this.btnSearchAll.Text = "显示全部";
             this.btnSearchAll.UseVisualStyleBackColor = true;
+            this.btnSearchAll.Click += new System.EventHandler(this.btnSearchAll_Click);
             // 
             // label2
             // 
@@ -292,6 +264,7 @@
             this.txtTitleSearch.Name = "txtTitleSearch";
             this.txtTitleSearch.Size = new System.Drawing.Size(123, 21);
             this.txtTitleSearch.TabIndex = 1;
+            this.txtTitleSearch.Leave += new System.EventHandler(this.txtTitleSearch_Leave);
             // 
             // label3
             // 
@@ -340,6 +313,42 @@
             this.groupBox2.TabStop = false;
             this.groupBox2.Text = "搜索";
             // 
+            // Column1
+            // 
+            this.Column1.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.Fill;
+            this.Column1.DataPropertyName = "Did";
+            this.Column1.HeaderText = "编号";
+            this.Column1.Name = "Column1";
+            this.Column1.ReadOnly = true;
+            // 
+            // Column2
+            // 
+            this.Column2.DataPropertyName = "DTitle";
+            this.Column2.HeaderText = "名称";
+            this.Column2.Name = "Column2";
+            this.Column2.ReadOnly = true;
+            // 
+            // Column3
+            // 
+            this.Column3.DataPropertyName = "DTypeTitle";
+            this.Column3.HeaderText = "分类";
+            this.Column3.Name = "Column3";
+            this.Column3.ReadOnly = true;
+            // 
+            // Column4
+            // 
+            this.Column4.DataPropertyName = "DPrice";
+            this.Column4.HeaderText = "价格";
+            this.Column4.Name = "Column4";
+            this.Column4.ReadOnly = true;
+            // 
+            // Column5
+            // 
+            this.Column5.DataPropertyName = "DChar";
+            this.Column5.HeaderText = "拼音";
+            this.Column5.Name = "Column5";
+            this.Column5.ReadOnly = true;
+            // 
             // FormDishInfo
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 12F);
@@ -350,6 +359,7 @@
             this.Controls.Add(this.groupBox2);
             this.Name = "FormDishInfo";
             this.Text = "FormDishInfo";
+            this.Load += new System.EventHandler(this.FormDishInfo_Load);
             ((System.ComponentModel.ISupportInitialize)(this.dgvList)).EndInit();
             this.groupBox1.ResumeLayout(false);
             this.groupBox3.ResumeLayout(false);
@@ -371,16 +381,11 @@
         private System.Windows.Forms.ComboBox ddlTypeAdd;
         private System.Windows.Forms.TextBox txtChar;
         private System.Windows.Forms.TextBox txtPrice;
-        private System.Windows.Forms.DataGridViewTextBoxColumn Column1;
-        private System.Windows.Forms.DataGridViewTextBoxColumn Column2;
-        private System.Windows.Forms.DataGridViewTextBoxColumn Column3;
-        private System.Windows.Forms.DataGridViewTextBoxColumn Column4;
         private System.Windows.Forms.TextBox txtTitleSave;
         private System.Windows.Forms.TextBox txtId;
         private System.Windows.Forms.Label label7;
         private System.Windows.Forms.Label label6;
         private System.Windows.Forms.DataGridView dgvList;
-        private System.Windows.Forms.DataGridViewTextBoxColumn Column5;
         private System.Windows.Forms.Label label5;
         private System.Windows.Forms.GroupBox groupBox1;
         private System.Windows.Forms.Label label4;
@@ -391,5 +396,10 @@
         private System.Windows.Forms.Label label3;
         private System.Windows.Forms.GroupBox groupBox3;
         private System.Windows.Forms.GroupBox groupBox2;
+        private System.Windows.Forms.DataGridViewTextBoxColumn Column1;
+        private System.Windows.Forms.DataGridViewTextBoxColumn Column2;
+        private System.Windows.Forms.DataGridViewTextBoxColumn Column3;
+        private System.Windows.Forms.DataGridViewTextBoxColumn Column4;
+        private System.Windows.Forms.DataGridViewTextBoxColumn Column5;
     }
 }

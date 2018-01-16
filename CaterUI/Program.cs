@@ -16,7 +16,7 @@ namespace CaterUI
         {
             Application.EnableVisualStyles();
             Application.SetCompatibleTextRenderingDefault(false);
-            Application.Run(new FormDishTypeInfo());
+            Application.Run(new FormDishInfo());
         }
     }
 }
