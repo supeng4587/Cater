@@ -44,6 +44,7 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="DishTypeInfoDal.cs" />
     <Compile Include="ManagerInfoDal.cs" />
     <Compile Include="MemberInfoDal.cs" />
     <Compile Include="MemberTypeInfoDal.cs" />
