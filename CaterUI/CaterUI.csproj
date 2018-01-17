@@ -48,6 +48,7 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="DdlModel.cs" />
     <Compile Include="FormDishInfo.cs">
       <SubType>Form</SubType>
     </Compile>

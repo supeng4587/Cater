@@ -91,6 +91,7 @@
             this.dgvList.SelectionMode = System.Windows.Forms.DataGridViewSelectionMode.FullRowSelect;
             this.dgvList.Size = new System.Drawing.Size(448, 428);
             this.dgvList.TabIndex = 0;
+            this.dgvList.CellFormatting += new System.Windows.Forms.DataGridViewCellFormattingEventHandler(this.dgvList_CellFormatting);
             // 
             // Column1
             // 
@@ -128,6 +129,7 @@
             this.btnSearchAll.TabIndex = 5;
             this.btnSearchAll.Text = "显示全部";
             this.btnSearchAll.UseVisualStyleBackColor = true;
+            this.btnSearchAll.Click += new System.EventHandler(this.btnSearchAll_Click);
             // 
             // label2
             // 
@@ -332,6 +334,7 @@
             this.ddlFreeSearch.Name = "ddlFreeSearch";
             this.ddlFreeSearch.Size = new System.Drawing.Size(112, 20);
             this.ddlFreeSearch.TabIndex = 9;
+            this.ddlFreeSearch.SelectedValueChanged += new System.EventHandler(this.ddlFreeSearch_SelectedValueChanged);
             // 
             // ddlHallSearch
             // 
@@ -341,6 +344,7 @@
             this.ddlHallSearch.Name = "ddlHallSearch";
             this.ddlHallSearch.Size = new System.Drawing.Size(112, 20);
             this.ddlHallSearch.TabIndex = 8;
+            this.ddlHallSearch.SelectedValueChanged += new System.EventHandler(this.ddlHallSearch_SelectedValueChanged);
             // 
             // FormTableInfo
             // 
@@ -352,6 +356,7 @@
             this.Controls.Add(this.groupBox2);
             this.Name = "FormTableInfo";
             this.Text = "FormTableInfo";
+            this.Load += new System.EventHandler(this.FormTableInfo_Load);
             this.groupBox1.ResumeLayout(false);
             ((System.ComponentModel.ISupportInitialize)(this.dgvList)).EndInit();
             this.groupBox3.ResumeLayout(false);

@@ -15,4 +15,9 @@ namespace CaterModel
     {
         public string DTypeTitle { get; set; }
     }
+
+    public partial class TableInfo
+    {
+        public string HallTitle { get; set; }
+    }
 }
