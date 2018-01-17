@@ -46,6 +46,7 @@
   <ItemGroup>
     <Compile Include="DishInfoDal.cs" />
     <Compile Include="DishTypeInfoDal.cs" />
+    <Compile Include="HallInfoDal.cs" />
     <Compile Include="ManagerInfoDal.cs" />
     <Compile Include="MemberInfoDal.cs" />
     <Compile Include="MemberTypeInfoDal.cs" />
