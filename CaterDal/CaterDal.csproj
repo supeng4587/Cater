@@ -52,6 +52,7 @@
     <Compile Include="MemberTypeInfoDal.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="SqliteHelper.cs" />
+    <Compile Include="TableInfoDal.cs" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\CaterCommon\CaterCommon.csproj">
