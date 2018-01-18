@@ -27,17 +27,19 @@ namespace CaterUI
         private void LoadSearchList()
         {
             HallInfoBll hiBll = new HallInfoBll();
-            var Halllist = hiBll.GetList();
 
-            Halllist.Insert(0, new HallInfo()
+            //厅包查询
+            var HallSearchList = hiBll.GetList();
+            HallSearchList.Insert(0, new HallInfo()
             {
                 HId = 0,
                 HTitle = "全部"
             });
-            ddlHallSearch.DataSource = Halllist;
+            ddlHallSearch.DataSource = HallSearchList;
             ddlHallSearch.ValueMember = "HId";
             ddlHallSearch.DisplayMember = "HTitle";
 
+            //空闲查询
             List<DdlModel> ListDdl = new List<DdlModel>()
             {
                 new DdlModel("-1","全部"),
@@ -45,10 +47,25 @@ namespace CaterUI
                 new DdlModel("1","空闲")
 
             };
-
             ddlFreeSearch.DataSource = ListDdl;
             ddlFreeSearch.ValueMember = "Id";
             ddlFreeSearch.DisplayMember = "Title";
+
+            //厅包添加
+            var HallAddList = hiBll.GetList();
+            ddlHallAdd.DataSource = HallAddList;
+            ddlHallAdd.ValueMember = "HId";
+            ddlHallAdd.DisplayMember = "HTitle";
+        }
+
+
+        private void Clean()
+        {
+            txtId.Text = "添加时无编号";
+            txtTitle.Text = "";
+            rbFree.Checked = true;
+            btnSave.Text = "添加";
+            LoadSearchList();
         }
 
         /// <summary>
@@ -127,7 +144,7 @@ namespace CaterUI
         }
 
         /// <summary>
-        /// dgvList 双击时间
+        /// dgvList 双击事件
         /// </summary>
         /// <param name="sender"></param>
         /// <param name="e"></param>
@@ -136,8 +153,17 @@ namespace CaterUI
             DataGridViewRow row = dgvList.Rows[e.RowIndex];
             txtId.Text = row.Cells[0].Value.ToString();
             txtTitle.Text = row.Cells[1].Value.ToString();
-            ddlHallAdd.SelectedText = row.Cells[2].Value.ToString();
-            
+            ddlHallAdd.Text = row.Cells[2].Value.ToString();
+            //虽然进行了显示格式化,但是值仍然是boolean类型
+            if (Convert.ToBoolean(row.Cells[3].Value.ToString()))
+            {
+                rbFree.Checked = true;
+            }
+            else
+            {
+                rbUnFree.Checked = true;
+            }
+            btnSave.Text = "修改";
         }
 
         /// <summary>
@@ -147,7 +173,44 @@ namespace CaterUI
         /// <param name="e"></param>
         private void btnSave_Click(object sender, EventArgs e)
         {
+            //构造接受用户输入
+            TableInfo ti = new TableInfo()
+            {
+                TTitle = txtTitle.Text,
+                THallId = Convert.ToInt32(ddlHallAdd.SelectedValue),
+                TIsFree = rbFree.Checked
+            };
 
+            if (txtId.Text == "添加时无编号")
+            {
+                #region 添加
+                if (tiBll.Add(ti))
+                {
+                    LoadList();
+                    MessageBox.Show("添加成功.");
+                }
+                else
+                {
+                    MessageBox.Show("添加失败,请稍后重试......");
+                }
+                #endregion
+            }
+            else
+            {
+                ti.TId = int.Parse(txtId.Text);
+                #region 修改
+                if (tiBll.Edit(ti))
+                {
+                    LoadList();
+                    MessageBox.Show("添加成功.");
+                }
+                else
+                {
+                    MessageBox.Show("添加失败,请稍后重试......");
+                }
+                #endregion
+            }
+            Clean();
         }
 
         /// <summary>
@@ -157,7 +220,7 @@ namespace CaterUI
         /// <param name="e"></param>
         private void btnCancel_Click(object sender, EventArgs e)
         {
-
+            Clean();
         }
 
         /// <summary>
@@ -167,7 +230,20 @@ namespace CaterUI
         /// <param name="e"></param>
         private void btnRemove_Click(object sender, EventArgs e)
         {
-
+            DialogResult result = MessageBox.Show("确认要删除吗?", "提示:", MessageBoxButtons.OKCancel);
+            if(result == DialogResult.OK)
+            {
+                int id = Convert.ToInt32(dgvList.SelectedRows[0].Cells[0].Value);
+                if (tiBll.Remove(id))
+                {
+                    LoadList();
+                    MessageBox.Show("删除成功.");
+                }
+                else
+                {
+                    MessageBox.Show("删除失败,请稍后重试......");
+                }
+            }
         }
 
         /// <summary>
@@ -177,7 +253,12 @@ namespace CaterUI
         /// <param name="e"></param>
         private void btnAddHall_Click(object sender, EventArgs e)
         {
-
+            FormHallInfo formHallInfo = new FormHallInfo();
+            
+            //向委托里注册方法方法,也就是给委托赋值
+            formHallInfo.MyUpdateForm += LoadList;
+            formHallInfo.MyUpdateForm += LoadSearchList;
+            formHallInfo.Show();
         }
     }
 }

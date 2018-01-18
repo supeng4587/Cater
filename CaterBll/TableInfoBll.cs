@@ -26,7 +26,7 @@ namespace CaterBll
             return tiDal.Update(ti) > 0;
         }
 
-        public bool Removw(int id)
+        public bool Remove(int id)
         {
             return tiDal.Delte(id) > 0;
         }

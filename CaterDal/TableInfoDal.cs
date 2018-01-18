@@ -87,7 +87,7 @@ namespace CaterDal
         /// <returns></returns>
         public int Delte(int id)
         {
-            string sql = "UPDATE TableInfo SET TIsDelete = 0 = @isFree WHERE TId = @id";
+            string sql = "UPDATE TableInfo SET TIsDelete = 0  WHERE TId = @id";
             SQLiteParameter p = new SQLiteParameter("@id", id);
 
             return SqliteHelper.ExecuteNonQuery(sql, p);

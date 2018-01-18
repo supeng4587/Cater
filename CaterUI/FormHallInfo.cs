@@ -15,6 +15,10 @@ namespace CaterUI
     public partial class FormHallInfo : Form
     {
         HallInfoBll hiBll = new HallInfoBll();
+
+        //委托变量和int变量没什么区别,给int变量赋的是一个值,给委托变量赋的是一个方法
+        public event Action MyUpdateForm;
+
         public FormHallInfo()
         {
             InitializeComponent();
@@ -92,6 +96,7 @@ namespace CaterUI
                 }
                 #endregion
             }
+            MyUpdateForm();
             Clean();
         }
 
@@ -120,6 +125,7 @@ namespace CaterUI
             {
                 MessageBox.Show("删除失败,请稍后重试......");
             }
+            MyUpdateForm();
         }
     }
 }
