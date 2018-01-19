@@ -15,7 +15,7 @@ namespace CaterDal
             //插入订单数据
             //更新餐桌状态
             //写在一起执行只需要和数据库交互一次,两个sql语句用分号隔开
-            string sql = "INSERT INTO OrderInfo(ODate, IsPay, TableId) VALUES(datetime('now','loadtime'),0,@tId);"+
+            string sql = "INSERT INTO OrderInfo(ODate, IsPay, TableId) VALUES(datetime('now','localtime'),0,@tId);"+
                 "UPDATE TableInfo SET TIsFree = 0 WHERE TId = @tId";
             SQLiteParameter p = new SQLiteParameter("@tId", tableId);
 
