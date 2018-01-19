@@ -132,6 +132,7 @@
             this.ddlType.Name = "ddlType";
             this.ddlType.Size = new System.Drawing.Size(176, 20);
             this.ddlType.TabIndex = 3;
+            this.ddlType.SelectedIndexChanged += new System.EventHandler(this.ddlType_SelectedIndexChanged);
             // 
             // label2
             // 
@@ -148,6 +149,7 @@
             this.txtTitle.Name = "txtTitle";
             this.txtTitle.Size = new System.Drawing.Size(208, 21);
             this.txtTitle.TabIndex = 1;
+            this.txtTitle.TextChanged += new System.EventHandler(this.txtTitle_TextChanged);
             // 
             // label1
             // 
@@ -260,7 +262,8 @@
             this.Controls.Add(this.groupBox1);
             this.Controls.Add(this.groupBox2);
             this.Name = "FormOrderDish";
-            this.Text = "FormOrderDish";
+            this.Text = "点菜";
+            this.Load += new System.EventHandler(this.FormOrderDish_Load);
             this.groupBox1.ResumeLayout(false);
             this.groupBox1.PerformLayout();
             ((System.ComponentModel.ISupportInitialize)(this.dgvAllDish)).EndInit();

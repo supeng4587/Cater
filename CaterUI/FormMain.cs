@@ -92,12 +92,16 @@ namespace CaterUI
             var lv1 = sender as ListView;
             int tableId = Convert.ToInt32(lv1.SelectedItems[0].Tag);
 
-            //1.2OrderInfo插入操作
+            //1.2OrderInfo插入操作，同时更新餐桌状态
             OrderInfoBll oiBll = new OrderInfoBll();
             oiBll.CreaterOder(tableId);
 
-            //2.修改TableInfo中餐桌使用状态
+            //1.3更新菜单项
+            lv1.SelectedItems[0].ImageIndex = 1;
 
+            //2.打开点菜页面
+            FormOrderDish formOrderDish = new FormOrderDish();
+            formOrderDish.Show();
         }
 
         private void menuManagerInfo_Click(object sender, EventArgs e)
