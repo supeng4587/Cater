@@ -59,7 +59,7 @@ namespace CaterUI
             //显示
             ddlTypeAdd.DisplayMember = "DTitle";
             //值
-            ddlTypeAdd.ValueMember = "DId"; 
+            ddlTypeAdd.ValueMember = "DId";
             #endregion
 
         }
@@ -71,7 +71,7 @@ namespace CaterUI
             LoadTypeList();
             LoadList();
         }
-        
+
         /// <summary>
         /// txtTitleSearch失去焦点查询
         /// </summary>
@@ -91,7 +91,7 @@ namespace CaterUI
         {
             LoadList();
         }
-        
+
         /// <summary>
         /// 查询全部
         /// </summary>
@@ -196,7 +196,7 @@ namespace CaterUI
         {
             int id = int.Parse(dgvList.SelectedCells[0].Value.ToString());
             DialogResult result = MessageBox.Show("确认要删除吗？", "提示", MessageBoxButtons.OKCancel);
-            if(result != DialogResult.OK)
+            if (result != DialogResult.OK)
             {
                 return;
             }
@@ -226,7 +226,7 @@ namespace CaterUI
         {
             FormDishTypeInfo formDti = new FormDishTypeInfo();
             DialogResult result = formDti.ShowDialog();
-            if(result == DialogResult.OK)
+            if (result == DialogResult.OK)
             {
                 LoadTypeList();
                 LoadList();

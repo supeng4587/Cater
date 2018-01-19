@@ -30,5 +30,6 @@ namespace CaterBll
         {
             return tiDal.Delte(id) > 0;
         }
+        
     }
 }

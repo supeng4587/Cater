@@ -19,7 +19,11 @@ namespace CaterUI
             InitializeComponent();
         }
 
-        TableInfoBll tiBll = new TableInfoBll();
+        private TableInfoBll tiBll = new TableInfoBll();
+
+#pragma warning disable CS0108 // Member hides inherited member; missing new keyword
+        public event Action Refresh;
+#pragma warning restore CS0108 // Member hides inherited member; missing new keyword
 
         /// <summary>
         /// LoadSearch Hall IsFree
@@ -211,6 +215,7 @@ namespace CaterUI
                 #endregion
             }
             Clean();
+            Refresh();
         }
 
         /// <summary>
@@ -244,6 +249,7 @@ namespace CaterUI
                     MessageBox.Show("删除失败,请稍后重试......");
                 }
             }
+            Refresh();
         }
 
         /// <summary>
