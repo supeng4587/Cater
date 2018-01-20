@@ -25,7 +25,7 @@ namespace CaterUI
         {
             if(_formOrderDish == null)
             {
-                FormOrderDish _formOrderDish = new FormOrderDish();
+                _formOrderDish = new FormOrderDish();
             }
             return _formOrderDish;
         }
