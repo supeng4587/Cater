@@ -14,9 +14,20 @@ namespace CaterUI
 {
     public partial class FormOrderDish : Form
     {
-        public FormOrderDish()
+        private static FormOrderDish _formOrderDish = null;
+
+        private FormOrderDish()
         {
             InitializeComponent();
+        }
+
+        public static FormOrderDish Create()
+        {
+            if(_formOrderDish == null)
+            {
+                FormOrderDish _formOrderDish = new FormOrderDish();
+            }
+            return _formOrderDish;
         }
 
         private void FormOrderDish_Load(object sender, EventArgs e)

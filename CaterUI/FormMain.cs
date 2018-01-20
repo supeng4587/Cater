@@ -100,7 +100,7 @@ namespace CaterUI
             lv1.SelectedItems[0].ImageIndex = 1;
 
             //2.打开点菜页面
-            FormOrderDish formOrderDish = new FormOrderDish();
+            FormOrderDish formOrderDish = FormOrderDish.Create();
             formOrderDish.Show();
         }
 
