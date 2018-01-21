@@ -4,6 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using CaterDal;
+using CaterModel;
 
 namespace CaterBll
 {
@@ -11,9 +12,25 @@ namespace CaterBll
     {
         private OrderInfoDal oiDal = new OrderInfoDal(); 
 
-        public bool CreaterOder(int tableId)
+        public int CreaterOder(int tableId)
         {
-            return oiDal.CreateOrder(tableId) > 0;
+            return oiDal.CreateOrder(tableId);
+        }
+
+        public bool ChooseDishes(int orderId, int dishId)
+        {
+            return oiDal.ChooseDishes(orderId, dishId)>0;
+
+        }
+
+        public List<OrderDetailInfo> GetDetailList(int orderId)
+        {
+            return oiDal.GetDetailList(orderId);
+        }
+
+        public int GetOrderIdByTableTid(int tableId)
+        {
+            return oiDal.GetOrderIdByTableTid(tableId);
         }
     }
 }

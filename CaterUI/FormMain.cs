@@ -33,7 +33,7 @@ namespace CaterUI
         {
             //判断登陆进来员工的级别,已确定是否显示menuManagerInfo图标
             int type = Convert.ToInt32(this.Tag);
-            if(type != 1)
+            if (type != 1)
             {
                 menuManagerInfo.Visible = false;
             }
@@ -59,7 +59,7 @@ namespace CaterUI
                 Dictionary<string, string> dic = new Dictionary<string, string>();
                 dic.Add("THallId", hi.HId.ToString());
                 List<TableInfo> tableInfoList = tiBll.GetList(dic);
-                
+
                 //动态创建列表添加到标签页上
                 ListView lvTableInfo = new ListView();
 
@@ -87,21 +87,36 @@ namespace CaterUI
 
         private void LvTableInfo_DoubleClick(object sender, EventArgs e)
         {
-            //1.开单向OrderInfo中写入
-            //1.1获取餐桌编号
-            var lv1 = sender as ListView;
+            //获取被点的餐桌项
+            ListView lv1 = sender as ListView;
+            ListViewItem lvi = lv1.SelectedItems[0];
+
+            OrderInfoBll oiBll = new OrderInfoBll();
             int tableId = Convert.ToInt32(lv1.SelectedItems[0].Tag);
 
-            //1.2OrderInfo插入操作，同时更新餐桌状态
-            OrderInfoBll oiBll = new OrderInfoBll();
-            oiBll.CreaterOder(tableId);
+            if (lvi.ImageIndex == 0)
+            {
+                //当前餐桌空闲需要开单
+                //开单向OrderInfo中写入，同时更新餐桌状态
+                
+                //获得订单号存到items项的Tag属性中
+                lvi.Tag = oiBll.CreaterOder(tableId);
+                 
+                //更新餐桌状态项
+                lv1.SelectedItems[0].ImageIndex = 1;
+            }
+            else
+            {
+                //当前餐桌已经占用，则需要点菜
+                lvi.Tag = oiBll.GetOrderIdByTableTid(tableId);
 
-            //1.3更新菜单项
-            lv1.SelectedItems[0].ImageIndex = 1;
+            }
+
 
             //2.打开点菜页面
-            FormOrderDish formOrderDish = FormOrderDish.Create();
-            formOrderDish.Show();
+            FormOrderDish formOrderDish = new FormOrderDish();
+            formOrderDish.Tag = lvi.Tag;
+            formOrderDish.ShowDialog();//模态打开
         }
 
         private void menuManagerInfo_Click(object sender, EventArgs e)

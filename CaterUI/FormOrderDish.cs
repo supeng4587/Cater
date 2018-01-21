@@ -14,25 +14,15 @@ namespace CaterUI
 {
     public partial class FormOrderDish : Form
     {
-        private static FormOrderDish _formOrderDish = null;
-
-        private FormOrderDish()
+        public FormOrderDish()
         {
             InitializeComponent();
-        }
-
-        public static FormOrderDish Create()
-        {
-            if(_formOrderDish == null)
-            {
-                _formOrderDish = new FormOrderDish();
-            }
-            return _formOrderDish;
         }
 
         private void FormOrderDish_Load(object sender, EventArgs e)
         {
             LoadDishTypeInfo();
+            LoadDetailInfo();
             LoadDishInfo();
         }
 
@@ -40,11 +30,11 @@ namespace CaterUI
         {
             //拼接查询条件
             Dictionary<string, string> dic = new Dictionary<string, string>();
-            if(txtTitle.Text != "")
+            if (txtTitle.Text != "")
             {
                 dic.Add("DChar", txtTitle.Text);
             }
-            if(ddlType.SelectedIndex != 0)
+            if (ddlType.SelectedIndex != 0)
             {
                 dic.Add("DTypeId", ddlType.SelectedValue.ToString());
             }
@@ -67,6 +57,14 @@ namespace CaterUI
             ddlType.DisplayMember = "DTitle";
         }
 
+        private void LoadDetailInfo()
+        {
+            OrderInfoBll oiBll = new OrderInfoBll();
+            int orderId = Convert.ToInt32(this.Tag);
+            dgvOrderDetail.AutoGenerateColumns = false;
+            dgvOrderDetail.DataSource = oiBll.GetDetailList(orderId);
+        }
+
         private void txtTitle_TextChanged(object sender, EventArgs e)
         {
             LoadDishInfo();
@@ -75,6 +73,38 @@ namespace CaterUI
         private void ddlType_SelectedIndexChanged(object sender, EventArgs e)
         {
             LoadDishInfo();
+        }
+
+        private void dgvAllDish_CellDoubleClick(object sender, DataGridViewCellEventArgs e)
+        {
+            //获得订单编号
+            int orderId = Convert.ToInt32(this.Tag);
+
+            //获得菜品编号
+            int dgvSelectedIndex = e.RowIndex;
+            var row = dgvAllDish.SelectedRows[dgvSelectedIndex];
+            var x = row.Cells[0].Value;
+            int dishId = Convert.ToInt32(x);
+
+            //执行点菜操作
+            OrderInfoBll oiBll = new OrderInfoBll();
+            if (oiBll.ChooseDishes(orderId, dishId))
+            {
+                //点菜成功
+                dgvOrderDetail.AutoGenerateColumns = false;
+                dgvOrderDetail.DataSource = oiBll.GetDetailList(orderId);
+
+            }
+        }
+
+        private void btnRemove_Click(object sender, EventArgs e)
+        {
+
+        }
+
+        private void btnOrder_Click(object sender, EventArgs e)
+        {
+
         }
     }
 }
