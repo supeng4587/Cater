@@ -34,27 +34,28 @@ namespace CaterUI
             {
                 dic.Add("DChar", txtTitle.Text);
             }
-            if (ddlType.SelectedIndex != 0)
+            if (ddlType.SelectedValue.ToString() != "0")
             {
                 dic.Add("DTypeId", ddlType.SelectedValue.ToString());
             }
 
             //查询菜品显示到dgvAllDish中
             DishInfoBll diBll = new DishInfoBll();
-            dgvAllDish.AutoGenerateColumns = false;
             dgvAllDish.DataSource = diBll.Getlist(dic);
+            dgvAllDish.AutoGenerateColumns = false;
+
         }
 
         private void LoadDishTypeInfo()
         {
-            DishTypeInfoBll dti = new DishTypeInfoBll();
-            List<DishTypeInfo> list = dti.GetList();
+            DishTypeInfoBll dtiBll = new DishTypeInfoBll();
+            List<DishTypeInfo> list = dtiBll.GetList();
 
             list.Insert(0, new DishTypeInfo() { DId = 0, DTitle = "全部" });
 
-            ddlType.DataSource = list;
             ddlType.ValueMember = "DId";
             ddlType.DisplayMember = "DTitle";
+            ddlType.DataSource = list;
         }
 
         private void LoadDetailInfo()
@@ -81,10 +82,7 @@ namespace CaterUI
             int orderId = Convert.ToInt32(this.Tag);
 
             //获得菜品编号
-            int dgvSelectedIndex = e.RowIndex;
-            var row = dgvAllDish.SelectedRows[dgvSelectedIndex];
-            var x = row.Cells[0].Value;
-            int dishId = Convert.ToInt32(x);
+            int dishId = Convert.ToInt32(dgvAllDish.Rows[e.RowIndex].Cells[0].Value);
 
             //执行点菜操作
             OrderInfoBll oiBll = new OrderInfoBll();

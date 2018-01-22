@@ -15,15 +15,15 @@ namespace CaterDal
         {
             //插入订单数据
             //更新餐桌状态
-            //写在一起执行只需要和数据库交互一次,两个sql语句用分号隔开
-
+            //写在一起执行,只需要和数据库交互一次.
+            //两个sql语句用分号隔开
             //下订单
-            string sql = "INSERT INTO OrderInfo(ODate, IsPay, TableId) VALUES(datetime('now','localtime'),0,@tId);"+
+            string sql = "INSERT INTO OrderInfo(ODate, IsPay, TableId) VALUES(datetime('now','localtime'),0,@tableId);"+
                 //更新餐桌状态
-                "UPDATE TableInfo SET TIsFree = 0 WHERE TId = @tId;"+
+                "UPDATE TableInfo SET TIsFree = 0 WHERE TId = @tableId;" +
                 //获取最新的订单编号
-                "SELECT OId FROM OrderInfo WHERE TableId = @tId AND IsPay = 0 ORDER BY OId DESC LIMIT 0,1";
-            SQLiteParameter p = new SQLiteParameter("@tId", tableId);
+                "SELECT OId FROM OrderInfo WHERE TableId = @tableId AND IsPay = 0 ORDER BY OId DESC LIMIT 0,1";
+            SQLiteParameter p = new SQLiteParameter("@tableId", tableId);
 
             return Convert.ToInt32(SqliteHelper.ExecuteScalar(sql, p));
         }

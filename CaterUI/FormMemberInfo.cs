@@ -14,13 +14,23 @@ namespace CaterUI
 {
     public partial class FormMemberInfo : Form
     {
-        public FormMemberInfo()
+        private FormMemberInfo()
         {
             InitializeComponent();
         }
 
         MemberInfoBll miBll = new MemberInfoBll();
 
+        public static FormMemberInfo _formMemberInfo = null;
+
+        public static FormMemberInfo Create()
+        {
+            if(_formMemberInfo == null)
+            {
+                _formMemberInfo = new FormMemberInfo(); 
+            }
+            return _formMemberInfo;
+        }
         
         private void FormMemberInfo_Load(object sender, EventArgs e)
         {
@@ -187,6 +197,11 @@ namespace CaterUI
                 LoadTypeList();
                 LoadList();
             }
+        }
+
+        private void FormMemberInfo_FormClosing(object sender, FormClosingEventArgs e)
+        {
+            _formMemberInfo = null;
         }
     }
 }

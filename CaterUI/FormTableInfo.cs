@@ -21,9 +21,11 @@ namespace CaterUI
 
         private TableInfoBll tiBll = new TableInfoBll();
 
+
 #pragma warning disable CS0108 // Member hides inherited member; missing new keyword
         public event Action Refresh;
 #pragma warning restore CS0108 // Member hides inherited member; missing new keyword
+
 
         /// <summary>
         /// LoadSearch Hall IsFree

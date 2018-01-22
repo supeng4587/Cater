@@ -43,11 +43,11 @@ namespace CaterUI
 
         private void LoadHallInfo()
         {
-            //获取HallInfo,厅包对象
+            //获取所有的HallInfo厅包对象
             HallInfoBll hiBll = new HallInfoBll();
             List<HallInfo> list = hiBll.GetList();
 
-            //遍历集合,xiang标签页中添加信息.遍历以前先清理一下TabPage集合
+            //遍历集合,向标签页中添加信息.遍历以前先清理一下TabPage集合
             tcHallInfo.TabPages.Clear();
             TableInfoBll tiBll = new TableInfoBll();
             foreach (var hi in list)
@@ -60,13 +60,13 @@ namespace CaterUI
                 dic.Add("THallId", hi.HId.ToString());
                 List<TableInfo> tableInfoList = tiBll.GetList(dic);
 
-                //动态创建列表添加到标签页上
+                //动态创建元素(列表)添加到容器(标签页)上
                 ListView lvTableInfo = new ListView();
 
                 //添加listview双击事件,完成开单功能
                 lvTableInfo.DoubleClick += LvTableInfo_DoubleClick;
 
-
+                //设置imagelist,让列表使用图片
                 lvTableInfo.LargeImageList = imageList1;
                 lvTableInfo.Dock = DockStyle.Fill;
 
@@ -91,18 +91,19 @@ namespace CaterUI
             ListView lv1 = sender as ListView;
             ListViewItem lvi = lv1.SelectedItems[0];
 
-            OrderInfoBll oiBll = new OrderInfoBll();
+            //获取餐桌编号
             int tableId = Convert.ToInt32(lv1.SelectedItems[0].Tag);
+
+            OrderInfoBll oiBll = new OrderInfoBll();
 
             if (lvi.ImageIndex == 0)
             {
                 //当前餐桌空闲需要开单
-                //开单向OrderInfo中写入，同时更新餐桌状态
-                
+                //1.开单向OrderInfo中写入，同时更新餐桌状态
                 //获得订单号存到items项的Tag属性中
                 lvi.Tag = oiBll.CreaterOder(tableId);
-                 
-                //更新餐桌状态项
+
+                //2.更新餐桌的图标为占用
                 lv1.SelectedItems[0].ImageIndex = 1;
             }
             else
@@ -129,7 +130,7 @@ namespace CaterUI
         private void menuMemberInfo_Click(object sender, EventArgs e)
         {
             //等会儿改成单例
-            FormMemberInfo formMemberInfo = new FormMemberInfo();
+            FormMemberInfo formMemberInfo = FormMemberInfo.Create();
             formMemberInfo.Show();
         }
 
@@ -137,13 +138,13 @@ namespace CaterUI
         {
             FormTableInfo formTableInfo = new FormTableInfo();
             formTableInfo.Refresh += LoadHallInfo;
-            formTableInfo.Show();
+            formTableInfo.ShowDialog();
         }
 
         private void emnuDishInfo_Click(object sender, EventArgs e)
         {
             FormDishInfo formDishInfo = new FormDishInfo();
-            formDishInfo.Show();
+            formDishInfo.ShowDialog();
         }
 
     }
