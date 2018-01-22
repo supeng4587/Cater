@@ -30,13 +30,24 @@ namespace CaterDal
 
         public int ChooseDishes(int orderId,int dishId)
         {
-            string sql = "INSERT INTO OrderDetailInfo(OrderId, DishId, Count) VALUES(@orderId, @dishId, 1)";
+            string sql = "SELECT COUNT(*) FROM OrderDetailInfo WHERE DishId = @dishId AND OrderId = @orderId";
             SQLiteParameter[] ps =
             {
                 new SQLiteParameter("@orderId",orderId),
                 new SQLiteParameter("@dishId",dishId)
             };
+            int index = Convert.ToInt32(SqliteHelper.ExecuteScalar(sql, ps));
 
+            if (index > 0)
+            {
+                //已点菜品增加份数
+                sql = "UPDATE OrderDetailInfo SET Count = Count + 1 WHERE DishId = @dishId AND OrderId = @orderId";
+            }
+            else
+            {
+                //点新蔡
+                sql = "INSERT INTO OrderDetailInfo(OrderId, DishId, Count) VALUES(@orderId, @dishId, 1)";
+            }
             return SqliteHelper.ExecuteNonQuery(sql, ps);
         }
 
@@ -68,6 +79,17 @@ namespace CaterDal
                 });
             }
             return list;
+        }
+
+        public int UpdateCountByOId(int oid,int count)
+        {
+            string sql = "UPDATE OrderDetailInfo SET Count = @count WHERE OId = @oid";
+            SQLiteParameter[] ps =
+            {
+                new SQLiteParameter("@count",count),
+                new SQLiteParameter("@oid",oid)
+            };
+            return SqliteHelper.ExecuteNonQuery(sql, ps);
         }
 
         

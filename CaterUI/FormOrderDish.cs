@@ -103,5 +103,10 @@ namespace CaterUI
         {
 
         }
+
+        private void dgvOrderDetail_CellLeave(object sender, DataGridViewCellEventArgs e)
+        {
+
+        }
     }
 }

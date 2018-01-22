@@ -10,7 +10,7 @@ namespace CaterBll
 {
     public partial class OrderInfoBll
     {
-        private OrderInfoDal oiDal = new OrderInfoDal(); 
+        private OrderInfoDal oiDal = new OrderInfoDal();
 
         public int CreaterOder(int tableId)
         {
@@ -19,7 +19,7 @@ namespace CaterBll
 
         public bool ChooseDishes(int orderId, int dishId)
         {
-            return oiDal.ChooseDishes(orderId, dishId)>0;
+            return oiDal.ChooseDishes(orderId, dishId) > 0;
 
         }
 
@@ -31,6 +31,11 @@ namespace CaterBll
         public int GetOrderIdByTableTid(int tableId)
         {
             return oiDal.GetOrderIdByTableTid(tableId);
+        }
+
+        public bool UpdateCountByOId(int oid, int count)
+        {
+            return oiDal.UpdateCountByOId(oid, count) > 0;
         }
     }
 }
