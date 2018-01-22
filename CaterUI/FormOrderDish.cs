@@ -19,6 +19,7 @@ namespace CaterUI
             InitializeComponent();
         }
 
+        OrderInfoBll oiBll = new OrderInfoBll();
         private void FormOrderDish_Load(object sender, EventArgs e)
         {
             LoadDishTypeInfo();
@@ -60,7 +61,6 @@ namespace CaterUI
 
         private void LoadDetailInfo()
         {
-            OrderInfoBll oiBll = new OrderInfoBll();
             int orderId = Convert.ToInt32(this.Tag);
             dgvOrderDetail.AutoGenerateColumns = false;
             dgvOrderDetail.DataSource = oiBll.GetDetailList(orderId);
@@ -85,7 +85,6 @@ namespace CaterUI
             int dishId = Convert.ToInt32(dgvAllDish.Rows[e.RowIndex].Cells[0].Value);
 
             //执行点菜操作
-            OrderInfoBll oiBll = new OrderInfoBll();
             if (oiBll.ChooseDishes(orderId, dishId))
             {
                 //点菜成功
