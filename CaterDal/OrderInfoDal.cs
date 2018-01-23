@@ -92,6 +92,39 @@ namespace CaterDal
             return SqliteHelper.ExecuteNonQuery(sql, ps);
         }
 
-        
+        public decimal GetTotalMoneyByOrderId(int orderId)
+        {
+            string sql = "SELECT SUM(odi.Count*di.DPrice) FROM OrderDetailInfo AS odi INNER JOIN DishInfo AS di ON odi.DishId = di.DId WHERE odi.OrderId = @orderId";
+            SQLiteParameter p = new SQLiteParameter("@orderId", orderId);
+
+            try
+            {
+                return Convert.ToDecimal(SqliteHelper.ExecuteScalar(sql, p));
+            }
+            catch
+            {
+                return 0;
+            }
+        }
+
+        public int SetOrderMoney(int orderId, decimal money)
+        {
+            string sql = "UPDATE OrderInfo set OMoney = @money WHERE OId =@oid";
+            SQLiteParameter[] ps =
+            {
+                new SQLiteParameter("@oid",orderId),
+                new SQLiteParameter("@money",money)
+            };
+
+            return SqliteHelper.ExecuteNonQuery(sql, ps);
+        }
+
+        public int DeleteDetailByOId(int oid)
+        {
+            string sql = "DELETE FROM OrderDetailInfo WHERE OId = @oid";
+            SQLiteParameter p = new SQLiteParameter("oid", oid);
+
+            return SqliteHelper.ExecuteNonQuery(sql, p);
+        }
     }
 }

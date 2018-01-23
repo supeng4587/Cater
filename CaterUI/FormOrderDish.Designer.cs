@@ -230,7 +230,7 @@
             this.dgvOrderDetail.RowTemplate.Height = 23;
             this.dgvOrderDetail.Size = new System.Drawing.Size(447, 435);
             this.dgvOrderDetail.TabIndex = 0;
-            this.dgvOrderDetail.CellLeave += new System.Windows.Forms.DataGridViewCellEventHandler(this.dgvOrderDetail_CellLeave);
+            this.dgvOrderDetail.CellEndEdit += new System.Windows.Forms.DataGridViewCellEventHandler(this.dgvOrderDetail_CellEndEdit);
             // 
             // Column5
             // 

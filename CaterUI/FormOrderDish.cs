@@ -42,9 +42,8 @@ namespace CaterUI
 
             //查询菜品显示到dgvAllDish中
             DishInfoBll diBll = new DishInfoBll();
-            dgvAllDish.DataSource = diBll.Getlist(dic);
             dgvAllDish.AutoGenerateColumns = false;
-
+            dgvAllDish.DataSource = diBll.Getlist(dic);
         }
 
         private void LoadDishTypeInfo()
@@ -64,6 +63,14 @@ namespace CaterUI
             int orderId = Convert.ToInt32(this.Tag);
             dgvOrderDetail.AutoGenerateColumns = false;
             dgvOrderDetail.DataSource = oiBll.GetDetailList(orderId);
+
+            GetTotalMoneyByOrderId();
+        }
+
+        private void GetTotalMoneyByOrderId()
+        {
+            int orderId = Convert.ToInt32(this.Tag);
+            lblMoney.Text = oiBll.GetTotalMoneyByOrderId(orderId).ToString();
         }
 
         private void txtTitle_TextChanged(object sender, EventArgs e)
@@ -94,19 +101,64 @@ namespace CaterUI
             }
         }
 
-        private void btnRemove_Click(object sender, EventArgs e)
+        private void dgvOrderDetail_CellEndEdit(object sender, DataGridViewCellEventArgs e)
         {
+            //当离开的列为count的时候执行
+            if (e.ColumnIndex == 2)
+            {
+                //获取oid和count
+                var row = dgvOrderDetail.Rows[e.RowIndex];
+                int oid = Convert.ToInt32(row.Cells[0].Value);
+                int count = Convert.ToInt32(row.Cells[2].Value);
 
+                //执行更新操作
+                oiBll.UpdateCountByOId(oid, count);
+            }
+
+            //重新计算总价
+            GetTotalMoneyByOrderId();
         }
 
         private void btnOrder_Click(object sender, EventArgs e)
         {
+            int orderId = Convert.ToInt32(this.Tag);
+            decimal money = Convert.ToInt32(lblMoney.Text);
 
+            if (oiBll.SetOrderMoney(orderId, money))
+            {
+                MessageBox.Show("下单成功");
+            }
         }
 
-        private void dgvOrderDetail_CellLeave(object sender, DataGridViewCellEventArgs e)
+        private void btnRemove_Click(object sender, EventArgs e)
         {
+            int oid;
+            try
+            {
+                oid = Convert.ToInt32(dgvOrderDetail.SelectedRows[0].Cells[0].Value);
+            }
+            catch
+            {
+                MessageBox.Show("请选中整行菜品");
+                return;
+            }
 
+            DialogResult result = MessageBox.Show("是否确认删除选中菜品,并重新计算价格?", "提示", MessageBoxButtons.OKCancel);
+            if (result == DialogResult.OK)
+            {
+                if (oiBll.DeleteDetailByOId(oid))
+                {
+                    LoadDetailInfo();
+
+                }
+                int orderId = Convert.ToInt32(this.Tag);
+                decimal money = Convert.ToInt32(lblMoney.Text);
+
+                if (oiBll.SetOrderMoney(orderId, money))
+                {
+                    MessageBox.Show("改单成功");
+                }
+            }
         }
     }
 }

@@ -37,5 +37,20 @@ namespace CaterBll
         {
             return oiDal.UpdateCountByOId(oid, count) > 0;
         }
+
+        public decimal GetTotalMoneyByOrderId(int orderId)
+        {
+            return oiDal.GetTotalMoneyByOrderId(orderId);
+        }
+
+        public bool SetOrderMoney(int orderId, decimal money)
+        {
+            return oiDal.SetOrderMoney(orderId, money) > 0;
+        }
+
+        public bool DeleteDetailByOId(int oid)
+        {
+            return oiDal.DeleteDetailByOId(oid) > 0;
+        }
     }
 }
