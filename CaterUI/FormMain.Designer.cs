@@ -103,6 +103,7 @@
             this.menuOrder.Name = "menuOrder";
             this.menuOrder.Size = new System.Drawing.Size(76, 68);
             this.menuOrder.Text = "toolStripMenuItem5";
+            this.menuOrder.Click += new System.EventHandler(this.menuOrder_Click);
             // 
             // menuQuit
             // 

@@ -148,5 +148,26 @@ namespace CaterUI
             formDishInfo.ShowDialog();
         }
 
+        private void menuOrder_Click(object sender, EventArgs e)
+        {
+            //现在到选中的标签页，在找到listview，找到选中的项，相中存储了餐桌编号，由餐桌编号查找到订单编号
+            OrderInfoBll oiBll = new OrderInfoBll();
+            ListView listview = tcHallInfo.SelectedTab.Controls[0] as ListView;
+
+            var lvtable = listview.SelectedItems[0];
+            if(lvtable.ImageIndex == 0)
+            {
+                MessageBox.Show("餐桌还未使用,无法结账.");
+                return;
+            }
+
+            int tableId = Convert.ToInt32(listview.SelectedItems[0].Tag);
+            int orderId = oiBll.GetOrderIdByTableTid(tableId);
+
+            FormOrderPay formOrderPay = new FormOrderPay();
+            formOrderPay.Tag = orderId;
+            formOrderPay.Refresh += LoadHallInfo;
+            formOrderPay.ShowDialog();
+        }
     }
 }

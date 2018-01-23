@@ -9,6 +9,7 @@ namespace CaterModel
     public partial class MemberInfo
     {
         public string MTypeTitle { get; set; }
+        public decimal MDiscount { get; set; }
     }
 
     public partial class DishInfo

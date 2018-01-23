@@ -14,7 +14,7 @@ namespace CaterDal
         public List<MemberInfo> GetList(Dictionary<string, string> dic)
         {
             //连接查询,得到会员类型的名字
-            string sql = "SELECT mi.MId, mi.MName, mi.MPhone, mi.MMoney, mi.MTypeId, mi.MIsDelete, mti.MTitle AS MTypeTitle FROM MemberInfo AS mi INNER JOIN MemberTypeInfo AS mti ON mi.MTypeId = mti.MId WHERE mi.MIsDelete = 1";
+            string sql = "SELECT mi.MId, mi.MName, mi.MPhone, mi.MMoney, mi.MTypeId, mti.MDiscount, mi.MIsDelete, mti.MTitle AS MTypeTitle FROM MemberInfo AS mi INNER JOIN MemberTypeInfo AS mti ON mi.MTypeId = mti.MId WHERE mi.MIsDelete = 1";
             //拼接条件
             if (dic.Count > 0)
             {
@@ -36,7 +36,8 @@ namespace CaterDal
                     MPhone = row["MPhone"].ToString(),
                     MMoney = Convert.ToDecimal(row["MMoney"]),
                     MTypeId = Convert.ToInt32(row["MTypeId"]),
-                    MTypeTitle = row["MTypeTitle"].ToString()
+                    MTypeTitle = row["MTypeTitle"].ToString(),
+                    MDiscount = Convert.ToDecimal(row["MDiscount"])
                 });
             }
             return list;

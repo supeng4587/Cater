@@ -126,6 +126,7 @@ namespace CaterUI
 
             if (oiBll.SetOrderMoney(orderId, money))
             {
+                GetTotalMoneyByOrderId();
                 MessageBox.Show("下单成功");
             }
         }

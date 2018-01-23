@@ -67,6 +67,7 @@
             this.btnCancel.TabIndex = 20;
             this.btnCancel.Text = "暂不结账";
             this.btnCancel.UseVisualStyleBackColor = true;
+            this.btnCancel.Click += new System.EventHandler(this.btnCancel_Click);
             // 
             // label3
             // 
@@ -83,6 +84,7 @@
             this.txtPhone.Name = "txtPhone";
             this.txtPhone.Size = new System.Drawing.Size(176, 21);
             this.txtPhone.TabIndex = 3;
+            this.txtPhone.Leave += new System.EventHandler(this.txtPhone_Leave);
             // 
             // label2
             // 
@@ -99,6 +101,7 @@
             this.txtId.Name = "txtId";
             this.txtId.Size = new System.Drawing.Size(176, 21);
             this.txtId.TabIndex = 1;
+            this.txtId.Leave += new System.EventHandler(this.txtId_Leave);
             // 
             // label1
             // 
@@ -117,6 +120,7 @@
             this.btnOrderPay.TabIndex = 19;
             this.btnOrderPay.Text = "确认结账";
             this.btnOrderPay.UseVisualStyleBackColor = true;
+            this.btnOrderPay.Click += new System.EventHandler(this.btnOrderPay_Click);
             // 
             // lblTypeTitle
             // 
@@ -229,6 +233,7 @@
             this.cbkMember.TabIndex = 16;
             this.cbkMember.Text = "是会员";
             this.cbkMember.UseVisualStyleBackColor = true;
+            this.cbkMember.CheckedChanged += new System.EventHandler(this.cbkMember_CheckedChanged);
             // 
             // FormOrderPay
             // 
@@ -244,7 +249,8 @@
             this.Controls.Add(this.gbMember);
             this.Controls.Add(this.cbkMember);
             this.Name = "FormOrderPay";
-            this.Text = "FormOrderPay";
+            this.Text = "结账付款";
+            this.Load += new System.EventHandler(this.FormOrderPay_Load);
             this.gbMember.ResumeLayout(false);
             this.gbMember.PerformLayout();
             this.ResumeLayout(false);

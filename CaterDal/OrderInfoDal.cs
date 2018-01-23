@@ -126,5 +126,74 @@ namespace CaterDal
 
             return SqliteHelper.ExecuteNonQuery(sql, p);
         }
+
+        public int pay(bool isUseMoney, int memberId, decimal payMoney,int orderId,decimal discount)
+        {
+            //创建数据库的连接对象
+            using (SQLiteConnection conn = new SQLiteConnection(System.Configuration.ConfigurationManager.ConnectionStrings["CaterConn"].ConnectionString))
+            {
+                int result = 0;
+                //由数据库链接对象创建事物
+                conn.Open();
+                SQLiteTransaction tran = conn.BeginTransaction();
+
+                //创建command对象
+                SQLiteCommand cmd = new SQLiteCommand();
+                //将命令对象启用事物
+                cmd.Transaction = tran;
+                //执行各种命令
+                string sql = "";
+                SQLiteParameter[] ps;
+                //1.根据是否使用余额决定扣款方式
+                try
+                {
+                    if (isUseMoney)
+                    {
+                        //使用余额
+                        sql = "UPDATE MemberInfo SET MMoney = MMoney - @payMoney WHERE MId=@mid";
+                        ps = new SQLiteParameter[]
+                        {
+                        new SQLiteParameter("@payMoney",payMoney),
+                        new SQLiteParameter("@mid",memberId)
+                        };
+                        cmd.CommandText = sql;
+                        cmd.Parameters.AddRange(ps);
+                        result +=cmd.ExecuteNonQuery();
+                    }
+
+                    //2.将订单状态改为IsPay=1
+                    sql = "UPDATE OrderInfo SET IsPay = 1, MemberId = @mid, Discount = @discount WHERE OId =@oid";
+                    ps = new SQLiteParameter[]
+                    {
+                    new SQLiteParameter("@mid",memberId),
+                    new SQLiteParameter("@discount",discount),
+                    new SQLiteParameter("@oid",orderId)
+                    };
+                    cmd.CommandText = sql;
+                    cmd.Parameters.Clear();
+                    cmd.Parameters.AddRange(ps);
+                    result += cmd.ExecuteNonQuery();
+
+                    //3.将餐桌状态改为IsFree=1
+                    sql = "UPDATE TableInfo SET TIsFree = 1 WHERE TId = (SELECT TableId FROM OrderInfo WHERE oid = @oid)";
+
+                    SQLiteParameter p = new SQLiteParameter("@oid",orderId);
+                    cmd.CommandText = sql;
+                    cmd.Parameters.Clear();
+                    cmd.Parameters.Add(p);
+                    result += cmd.ExecuteNonQuery();
+
+                    //提交事物
+                    tran.Commit();
+                }
+                catch
+                {
+                    result = 0;
+                    //回滚事物
+                    tran.Rollback();
+                }
+                return result;
+            }
+        }
     }
 }

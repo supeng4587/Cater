@@ -52,5 +52,10 @@ namespace CaterBll
         {
             return oiDal.DeleteDetailByOId(oid) > 0;
         }
+
+        public bool pay(bool isUseMoney, int memberId, decimal payMoney, int orderId, decimal discount)
+        {
+            return oiDal.pay(isUseMoney, memberId, payMoney, orderId, discount) > 0;
+        }
     }
 }
