@@ -95,13 +95,14 @@ namespace CaterUI
             int tableId = Convert.ToInt32(lv1.SelectedItems[0].Tag);
 
             OrderInfoBll oiBll = new OrderInfoBll();
+            int orderId;
 
             if (lvi.ImageIndex == 0)
             {
                 //当前餐桌空闲需要开单
                 //1.开单向OrderInfo中写入，同时更新餐桌状态
                 //获得订单号存到items项的Tag属性中
-                lvi.Tag = oiBll.CreaterOder(tableId);
+                orderId = oiBll.CreaterOder(tableId);
 
                 //2.更新餐桌的图标为占用
                 lv1.SelectedItems[0].ImageIndex = 1;
@@ -109,14 +110,14 @@ namespace CaterUI
             else
             {
                 //当前餐桌已经占用，则需要点菜
-                lvi.Tag = oiBll.GetOrderIdByTableTid(tableId);
+                orderId = oiBll.GetOrderIdByTableTid(tableId);
 
             }
 
 
             //2.打开点菜页面
             FormOrderDish formOrderDish = new FormOrderDish();
-            formOrderDish.Tag = lvi.Tag;
+            formOrderDish.Tag = orderId;
             formOrderDish.ShowDialog();//模态打开
         }
 
