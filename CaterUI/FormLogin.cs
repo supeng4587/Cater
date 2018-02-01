@@ -26,7 +26,7 @@ namespace CaterUI
 
         private void btnLogin_Click(object sender, EventArgs e)
         {
-            //获取用户输入的信息
+            //获取用户输入的信息1
             string name = txtName.Text;
             string pwd = txtPwd.Text;
             //调用代码
